@@ -10,6 +10,11 @@ For users on Windows Subsystem for Linux (WSL), additional configuration for Roo
 
 I personally use this as my daily driver and will continue to maintain the stack as the starr landscape changes, I aim to reduce the number of steps as much as possible.
 
+# Prerequisites
+
+1. Docker
+2. `jq`
+
 # Getting Started
 
 1. `cp .env.example .env`
