@@ -1,3 +1,16 @@
+# Overview
+
+This project provides a comprehensive setup for managing and automating your media download and organization using Radarr, Sonarr, Prowlarr, and Overseer. It is designed to be easy to configure and run, with a focus on providing a unified interface for all your media needs.
+
+The setup process involves generating API keys for each of the applications, setting up your desired hostname, timezone, email address for Let's Encrypt, and specifying the directory for media storage on your host machine. The project uses a Makefile for easy configuration and startup.
+
+Once the setup is complete, you can access the Overseer interface via your specified hostname or `localhost:5055`. From there, you can configure each of the Radarr/Sonarr/Prowlarr apps, including setting up the Download Client (the example uses `qbittorrent`).
+
+For users on Windows Subsystem for Linux (WSL), additional configuration for Root Folders/Folder Mapping is required.
+
+This project aims to make managing your media collection as straightforward and automated as possible, providing you with more time to enjoy your content.
+
+I personally use this as my daily driver and will continue to maintain the stack as the starr landscape changes.
 
 # Getting Started
 
