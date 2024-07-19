@@ -23,7 +23,7 @@ install() {
     PROWLARR_OUTPUT="prowlarr/config.xml"
   fi
 
-  docker compose run --rm overseerr true > /dev/null 2>&1
+  docker compose run --rm overseerr true > /dev/null
 
   OVERSEERR_TEMPLATE=$(jq -s 'reduce .[] as $x ({}; . * $x)' overseerr/settings.json overseerr/settings.json.partial)
 
