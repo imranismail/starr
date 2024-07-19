@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eou pipefail
+set -eo pipefail
 
 install() {
   local DRY_RUN="false"
