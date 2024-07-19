@@ -7,7 +7,7 @@ jq() {
 }
 
 install() {
-  local DRY_RUN="${1:-false}"
+  local ACTION="${1:---dry-run}"
   local OVERSEERR_TEMPLATE=""
   local OVERSEERR_OUTPUT="/dev/stdout"
   local RADARR_OUTPUT="/dev/stdout"
@@ -15,7 +15,7 @@ install() {
   local ANIME_SONARR_OUTPUT="/dev/stdout"
   local PROWLARR_OUTPUT="/dev/stdout"
 
-  if [ "$DRY_RUN" == "false" ]; then
+  if [ "$ACTION" == "--apply" ]; then
     OVERSEERR_OUTPUT="overseerr/settings.json"
     RADARR_OUTPUT="radarr/config.xml"
     SERIES_SONARR_OUTPUT="series-sonarr/config.xml"
