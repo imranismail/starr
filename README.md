@@ -13,7 +13,10 @@ I personally use this as my daily driver and will continue to maintain the stack
 # Prerequisites
 
 1. Docker
-2. `jq`
+2. GNU Make (should be installed by default on most unix systems)
+3. sed (should be installed by default on most unix systems)
+4. bash (should be installed by default on most unix systems)
+6. openssl (for generating API keys, you can also just use random string generator)
 
 # Getting Started
 
