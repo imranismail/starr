@@ -27,8 +27,9 @@ I personally use this as my daily driver and will continue to maintain the stack
 5. Replace `TIMEZONE` with your timezone
 6. Replace `LETSENCRYPT_EMAIL` with your email address
 7. Replace `MEDIA_DIR` with path to where you'll be storing media on your host machine
-8. Run `make configure-test`, verify the config then run `make configure`
-9. Run `make start`
-10. Visit the `HOSTNAME` or `localhost:5055` and configure `Overseer` using the wizard
-11. For each Radarr/Sonarr/Prowlarr apps, configure the `Download Client`, I use `qbittorrent`
-12. Configure Root Folders/Folder Mapping if you're using WSL
+8. Replace `USER_ID` and `GROUP_ID` with your host user id and group id.
+9. Run `make configure-test`, verify the config then run `make configure`
+10. Run `make start`
+11. Visit the `HOSTNAME` or `localhost:5055` and configure `Overseer` using the wizard
+12. For each Radarr/Sonarr/Prowlarr apps, configure the `Download Client`, I use `qbittorrent`
+13. Configure Root Folders/Folder Mapping if you're using WSL

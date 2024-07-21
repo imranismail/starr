@@ -134,7 +134,7 @@ services:
     container_name: recyclarr
     volumes:
       - ./recyclarr:/config
-    user: 1000:1000
+    user: ${USER_ID}:${GROUP_ID}
     restart: unless-stopped
     read_only: true
     tmpfs: /tmp
