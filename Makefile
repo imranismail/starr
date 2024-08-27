@@ -2,10 +2,12 @@ ifneq (,$(wildcard ./.env))
 	include .env
 endif
 
-.PHONY: start stop restart configure-test configure
+.PHONY: start stop restart configure-test configure recyclarr
 start:
 	@docker compose pull
 	@docker compose up -d --remove-orphans
+	@docker compose run --rm recyclarr sync
+sync:
 	@docker compose run --rm recyclarr sync
 stop:
 	@docker compose down

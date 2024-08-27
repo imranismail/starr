@@ -17,19 +17,19 @@ sonarr:
     custom_formats:
       - trash_ids:
           - 026d5aadd1a6b4e550b134cb6c72b3ca # Uncensored
-        quality_profiles:
+        assign_scores_to:
           - name: Remux-1080p - Anime
             score: 0 # Adjust scoring as desired
 
       - trash_ids:
           - b2550eb333d27b75833e25b8c2557b38 # 10bit
-        quality_profiles:
+        assign_scores_to:
           - name: Remux-1080p - Anime
             score: 0 # Adjust scoring as desired
 
       - trash_ids:
           - 418f50b10f1907201b6cfdf881f467b7 # Anime Dual Audio
-        quality_profiles:
+        assign_scores_to:
           - name: Remux-1080p - Anime
             score: 0 # Adjust scoring as desired
 
@@ -68,7 +68,7 @@ sonarr:
           # HDR10+ Boost - Uncomment the next two lines if any of your devices DO support HDR10+
           # - 0dad0a507451acddd754fe6dc3a7f5e7 # HDR10+ Boost
           # - 385e9e8581d33133c3961bdcdeffb7b4 # DV HDR10+ Boost
-        quality_profiles:
+        assign_scores_to:
           - name: WEB-2160p
 
       # Optional
@@ -78,7 +78,7 @@ sonarr:
           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
           - 06d66ab109d4d2eddb2794d21526d140 # Retags
           - 1b3994c551cbb92a2c781af061f4ab44 # Scene
-        quality_profiles:
+        assign_scores_to:
           - name: WEB-2160p
 
       - trash_ids:
@@ -89,7 +89,7 @@ sonarr:
       #       score: 0
       # - trash_ids:
       #     - 9b64dff695c2115facf1b6ea59c9bd07 # x265 (no HDR/DV)
-        quality_profiles:
+        assign_scores_to:
           - name: WEB-2160p
 
       # Optional SDR
@@ -99,7 +99,7 @@ sonarr:
       - trash_ids:
           # - 2016d1676f5ee13a5b7257ff86ac9a93 # SDR
           # - 83304f261cf516bb208c18c54c0adf97 # SDR (no WEBDL)
-        quality_profiles:
+        assign_scores_to:
           - name: WEB-2160p
 radarr:
   movies:
@@ -138,14 +138,14 @@ radarr:
           # - 1c1a4c5e823891c75bc50380a6866f73 # DTS
           # - 240770601cc226190c367ef59aba7463 # AAC
           # - c2998bd0d90ed5621d8df281e839436e # DD
-        quality_profiles:
+        assign_scores_to:
           - name: Remux + WEB 2160p
           - name: Remux + WEB 1080p
 
       # Movie Versions
       - trash_ids:
           - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
-        quality_profiles:
+        assign_scores_to:
           - name: Remux + WEB 2160p
             score: 0 # Uncomment this line to disable prioritised IMAX Enhanced releases
           - name: Remux + WEB 1080p
@@ -159,7 +159,7 @@ radarr:
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
           - f537cf427b64c38c8e36298f657e4828 # Scene
-        quality_profiles:
+        assign_scores_to:
           - name: Remux + WEB 2160p
           - name: Remux + WEB 1080p
 
@@ -173,7 +173,7 @@ radarr:
       #       score: 0
       # - trash_ids:
       #     - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
-        quality_profiles:
+        assign_scores_to:
           - name: Remux + WEB 2160p
           - name: Remux + WEB 1080p
 
@@ -184,7 +184,7 @@ radarr:
           # HDR10+ Boost - Uncomment the next two lines if any of your devices DO support HDR10+
           # - b17886cb4158d9fea189859409975758 # HDR10Plus Boost
           # - 55a5b50cb416dea5a50c4955896217ab # DV HDR10+ Boost
-        quality_profiles:
+        assign_scores_to:
           - name: Remux + WEB 2160p
 
       # Optional SDR
@@ -194,23 +194,23 @@ radarr:
       - trash_ids:
           - 9c38ebb7384dada637be8899efa68e6f # SDR
           # - 25c12f78430a3a23413652cbd1d48d77 # SDR (no WEBDL)
-        quality_profiles:
+        assign_scores_to:
           - name: Remux + WEB 2160p
 
       - trash_ids:
           - 064af5f084a0a24458cc8ecd3220f93f # Uncensored
-        quality_profiles:
+        assign_scores_to:
           - name: Remux-1080p - Anime
             score: 0 # Adjust scoring as desired
 
       - trash_ids:
           - a5d148168c4506b55cf53984107c396e # 10bit
-        quality_profiles:
+        assign_scores_to:
           - name: Remux-1080p - Anime
             score: 0 # Adjust scoring as desired
 
       - trash_ids:
           - 4a3b087eea2ce012fcc1ce319259a3be # Anime Dual Audio
-        quality_profiles:
+        assign_scores_to:
           - name: Remux-1080p - Anime
             score: 0 # Adjust scoring as desired
