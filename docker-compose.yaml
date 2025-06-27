@@ -31,6 +31,13 @@ services:
     volumes:
       - ./traefik/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - series-sonarr
+      - anime-sonarr
+      - radarr
+      - prowlarr
+      - overseerr
+      - recyclarr
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
     container_name: overseerr
