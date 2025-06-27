@@ -200,6 +200,7 @@ radarr:
           - 55a5b50cb416dea5a50c4955896217ab # DV HDR10+ Boost
         assign_scores_to:
           - name: Remux + WEB 2160p
+          - name: Remux + WEB 1080p
 
       # Optional SDR
       # Only ever use ONE of the following custom formats:
@@ -210,6 +211,7 @@ radarr:
           # - 25c12f78430a3a23413652cbd1d48d77 # SDR (no WEBDL)
         assign_scores_to:
           - name: Remux + WEB 2160p
+          - name: Remux + WEB 1080p
 
       - trash_ids:
           - 064af5f084a0a24458cc8ecd3220f93f # Uncensored
