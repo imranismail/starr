@@ -45,20 +45,26 @@ sonarr:
       - template: sonarr-quality-definition-series
       - template: sonarr-v4-quality-profile-web-2160p
       - template: sonarr-v4-custom-formats-web-2160p
-      - template: sonarr-v4-quality-profile-web-1080p
-      - template: sonarr-v4-custom-formats-web-1080p
 
-    # quality_profiles:
-    #   - name: WEB-2160p
-    #     qualities:
-    #       - name: WEB 2160p
-    #         qualities:
-    #           - WEBDL-2160p
-    #           - WEBRip-2160p
-    #       - name: WEB 1080p
-    #         qualities:
-    #           - WEBDL-1080p
-    #           - WEBRip-1080p
+    quality_profiles:
+      - name: WEB-2160p
+        reset_unmatched_scores:
+          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: WEB 2160p
+          until_score: 10000
+        min_format_score: 0
+        quality_sort: top
+        qualities:
+          - name: WEB 2160p
+            qualities:
+              - WEBDL-2160p
+              - WEBRip-2160p
+          - name: WEB 1080p
+            qualities:
+              - WEBDL-1080p
+              - WEBRip-1080p
 
     # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
     custom_formats:
@@ -82,7 +88,6 @@ sonarr:
           # - 1b3994c551cbb92a2c781af061f4ab44 # Scene
         assign_scores_to:
           - name: WEB-2160p
-          - name: WEB-1080p
 
       - trash_ids:
           # Uncomment the next six lines to allow x265 HD releases with HDR/DV
@@ -90,13 +95,10 @@ sonarr:
         assign_scores_to:
           - name: WEB-2160p
             score: 0
-          - name: WEB-1080p
-            score: 0
       - trash_ids:
           - 9b64dff695c2115facf1b6ea59c9bd07 # x265 (no HDR/DV)
         assign_scores_to:
           - name: WEB-2160p
-          - name: WEB-1080p
 
       # Optional SDR
       # Only ever use ONE of the following custom formats:
@@ -107,7 +109,6 @@ sonarr:
           # - 83304f261cf516bb208c18c54c0adf97 # SDR (no WEBDL)
         assign_scores_to:
           - name: WEB-2160p
-          - name: WEB-1080p
 radarr:
   movies:
     base_url: http://radarr:7878/radarr
@@ -116,6 +117,28 @@ radarr:
     delete_old_custom_formats: true
     replace_existing_custom_formats: true
 
+    quality_profiles:
+      - name: Remux + WEB 2160p
+        reset_unmatched_scores:
+          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Remux-2160p
+          until_score: 10000
+        min_format_score: 0
+        quality_sort: top
+        qualities:
+          - name: Remux-2160p
+          - name: WEB 2160p
+            qualities:
+              - WEBDL-2160p
+              - WEBRip-2160p
+          - name: Remux-1080p
+          - name: WEB 1080p
+            qualities:
+              - WEBDL-1080p
+              - WEBRip-1080p
+
     include:
       # Comment out any of the following includes to disable them
       - template: radarr-quality-definition-movie
@@ -123,8 +146,6 @@ radarr:
       - template: radarr-custom-formats-anime
       - template: radarr-quality-profile-remux-web-2160p
       - template: radarr-custom-formats-remux-web-2160p
-      - template: radarr-quality-profile-remux-web-1080p
-      - template: radarr-custom-formats-remux-web-1080p
 
     # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
     custom_formats:
@@ -147,7 +168,6 @@ radarr:
           # - c2998bd0d90ed5621d8df281e839436e # DD
         assign_scores_to:
           - name: Remux + WEB 2160p
-          - name: Remux + WEB 1080p
 
       # Movie Versions
       - trash_ids:
@@ -163,7 +183,6 @@ radarr:
           - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
         assign_scores_to:
           - name: Remux + WEB 2160p
-          - name: Remux + WEB 1080p
 
       # Optional
       - trash_ids:
@@ -175,7 +194,6 @@ radarr:
           # - f537cf427b64c38c8e36298f657e4828 # Scene
         assign_scores_to:
           - name: Remux + WEB 2160p
-          - name: Remux + WEB 1080p
 
       - trash_ids:
           # Uncomment the next six lines to allow x265 HD releases with HDR/DV
@@ -189,7 +207,6 @@ radarr:
           - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
         assign_scores_to:
           - name: Remux + WEB 2160p
-          - name: Remux + WEB 1080p
 
       - trash_ids:
           # Comment out the next line if you and all of your users' setups are fully DV compatible
@@ -200,7 +217,6 @@ radarr:
           - 55a5b50cb416dea5a50c4955896217ab # DV HDR10+ Boost
         assign_scores_to:
           - name: Remux + WEB 2160p
-          - name: Remux + WEB 1080p
 
       # Optional SDR
       # Only ever use ONE of the following custom formats:
@@ -211,7 +227,6 @@ radarr:
           # - 25c12f78430a3a23413652cbd1d48d77 # SDR (no WEBDL)
         assign_scores_to:
           - name: Remux + WEB 2160p
-          - name: Remux + WEB 1080p
 
       - trash_ids:
           - 064af5f084a0a24458cc8ecd3220f93f # Uncensored
