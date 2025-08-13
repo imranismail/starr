@@ -33,3 +33,35 @@ I personally use this as my daily driver and will continue to maintain the stack
 11. Visit the `HOSTNAME` or `localhost:5055` and configure `Overseer` using the wizard
 12. For each Radarr/Sonarr/Prowlarr apps, configure the `Download Client`, I use `qbittorrent`
 13. Configure Root Folders/Folder Mapping if you're using WSL
+
+# FlareSolver Setup (Optional)
+
+FlareSolver is a proxy server to bypass Cloudflare protection for web scrapers. This is useful for Prowlarr indexers that are protected by Cloudflare.
+
+## Setup Steps
+
+1. **Start FlareSolver container:**
+   ```bash
+   docker run -d \
+     --name=flaresolverr \
+     -p 8191:8191 \
+     -e LOG_LEVEL=info \
+     --restart unless-stopped \
+     ghcr.io/flaresolverr/flaresolverr:latest
+   ```
+
+2. **Configure Prowlarr to use FlareSolver:**
+   - Navigate to Prowlarr (usually at `http://localhost:9696` or your `HOSTNAME:9696`)
+   - Go to `Settings` → `Indexers`
+   - Scroll to `Indexer Proxies` section
+   - Click the + button and choose FlareSolver
+   - Set `FlareSolver URL` to `http://localhost:8191` (or your Docker host IP if running on a different machine)
+   - Add a tag to use for specific indexer or a general one
+   - Click `Test` to verify the connection
+   - Save the settings
+
+3. **Enable FlareSolver for specific indexers:**
+   - Go to `Indexers` in Prowlarr
+   - Edit any indexer that requires Cloudflare bypass
+   - In the indexer settings, add the FlareSolver tag you created
+   - Save the indexer configuration
