@@ -1,46 +1,22 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
 sonarr:
-  anime:
-    base_url: http://anime-sonarr:8988/anime-sonarr
-    api_key: !env_var ANIME_SONARR_API_KEY
+  series:
+    base_url: http://sonarr:8989/sonarr
+    api_key: !env_var SONARR_API_KEY
 
     delete_old_custom_formats: true
     replace_existing_custom_formats: true
 
     include:
+      # ANIME
+      #--------
       # Comment out any of the following includes to disable them
       - template: sonarr-quality-definition-anime
       - template: sonarr-v4-quality-profile-anime
       - template: sonarr-v4-custom-formats-anime
 
-    # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
-    custom_formats:
-      - trash_ids:
-          - 026d5aadd1a6b4e550b134cb6c72b3ca # Uncensored
-        assign_scores_to:
-          - name: Remux-1080p - Anime
-            score: 100 # Adjust scoring as desired
-
-      - trash_ids:
-          - b2550eb333d27b75833e25b8c2557b38 # 10bit
-        assign_scores_to:
-          - name: Remux-1080p - Anime
-            score: 100 # Adjust scoring as desired
-
-      - trash_ids:
-          - 418f50b10f1907201b6cfdf881f467b7 # Anime Dual Audio
-        assign_scores_to:
-          - name: Remux-1080p - Anime
-            score: -100 # Adjust scoring as desired
-
-  series:
-    base_url: http://series-sonarr:8989/series-sonarr
-    api_key: !env_var SERIES_SONARR_API_KEY
-
-    delete_old_custom_formats: true
-    replace_existing_custom_formats: true
-
-    include:
+      # SERIES
+      #--------
       # Comment out any of the following includes to disable them
       - template: sonarr-quality-definition-series
       - template: sonarr-v4-quality-profile-web-2160p
@@ -68,6 +44,28 @@ sonarr:
 
     # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
     custom_formats:
+      # ANIME
+      #---------
+      - trash_ids:
+          - 026d5aadd1a6b4e550b134cb6c72b3ca # Uncensored
+        assign_scores_to:
+          - name: Remux-1080p - Anime
+            score: 100 # Adjust scoring as desired
+
+      - trash_ids:
+          - b2550eb333d27b75833e25b8c2557b38 # 10bit
+        assign_scores_to:
+          - name: Remux-1080p - Anime
+            score: 100 # Adjust scoring as desired
+
+      - trash_ids:
+          - 418f50b10f1907201b6cfdf881f467b7 # Anime Dual Audio
+        assign_scores_to:
+          - name: Remux-1080p - Anime
+            score: -100 # Adjust scoring as desired
+
+      # SERIES
+      #---------
       # HDR Formats
       - trash_ids:
           # Comment out the next line if you and all of your users' setups are fully DV compatible

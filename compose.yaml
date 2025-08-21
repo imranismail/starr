@@ -32,8 +32,7 @@ services:
       - ./traefik/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on:
-      - series-sonarr
-      - anime-sonarr
+      - sonarr
       - radarr
       - prowlarr
       - overseerr
@@ -53,15 +52,15 @@ services:
       - LOG_LEVEL=${LOG_LEVEL}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.overseerr.rule=(Host(`${HOSTNAME}`))
+      - traefik.http.routers.overseerr.rule=(Host(`overseer.${HOSTNAME}`))
       - traefik.http.routers.overseerr.tls=true
       - traefik.http.routers.overseerr.tls.certresolver=letsencrypt
       # - traefik.http.routers.overseerr.middlewares=authelia@docker
-  series-sonarr:
+  sonarr:
     image: lscr.io/linuxserver/sonarr:latest
-    container_name: series-sonarr
+    container_name: sonarr
     volumes:
-      - ./series-sonarr:/config
+      - ./sonarr:/config
       - ${MEDIA_DIR}:/data
     ports:
       - 8989:8989
@@ -73,29 +72,9 @@ services:
       - LOG_LEVEL=${LOG_LEVEL}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.series-sonarr.rule=(Host(`${HOSTNAME}`) && PathPrefix(`/series-sonarr`))
-      - traefik.http.routers.series-sonarr.tls=true
-      - traefik.http.routers.series-sonarr.tls.certresolver=letsencrypt
-      # - traefik.http.routers.series-sonarr.middlewares=authelia@docker
-  anime-sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
-    container_name: anime-sonarr
-    volumes:
-      - ./anime-sonarr:/config
-      - ${MEDIA_DIR}:/data
-    ports:
-      - 8988:8988
-    restart: unless-stopped
-    environment:
-      - PGID=${GROUP_ID}
-      - PUID=${USER_ID}
-      - TZ=${TIMEZONE}
-      - LOG_LEVEL=${LOG_LEVEL}
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.anime-sonarr.rule=(Host(`${HOSTNAME}`) && PathPrefix(`/anime-sonarr`))
-      - traefik.http.routers.anime-sonarr.tls=true
-      - traefik.http.routers.anime-sonarr.tls.certresolver=letsencrypt
+      - traefik.http.routers.sonarr.rule=(Host(`sonarr.${HOSTNAME}`))
+      - traefik.http.routers.sonarr.tls=true
+      - traefik.http.routers.sonarr.tls.certresolver=letsencrypt
       # - traefik.http.routers.anime-sonarr.middlewares=authelia@docker
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -113,7 +92,7 @@ services:
       - LOG_LEVEL=${LOG_LEVEL}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.radarr.rule=(Host(`${HOSTNAME}`) && PathPrefix(`/radarr`))
+      - traefik.http.routers.radarr.rule=(Host(`radarr.${HOSTNAME}`))
       - traefik.http.routers.radarr.tls=true
       - traefik.http.routers.radarr.tls.certresolver=letsencrypt
       # - traefik.http.routers.radarr.middlewares=authelia@docker
@@ -132,7 +111,7 @@ services:
       - LOG_LEVEL=${LOG_LEVEL}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.prowlarr.rule=(Host(`${HOSTNAME}`) && PathPrefix(`/prowlarr`))
+      - traefik.http.routers.prowlarr.rule=(Host(`prowlarr.${HOSTNAME}`))
       - traefik.http.routers.prowlarr.tls=true
       - traefik.http.routers.prowlarr.tls.certresolver=letsencrypt
       # - traefik.http.routers.prowlarr.middlewares=authelia@docker
@@ -148,8 +127,7 @@ services:
     environment:
       - TZ=${TIMEZONE}
       - RECYCLARR_CREATE_CONFIG=true
-      - ANIME_SONARR_API_KEY=${ANIME_SONARR_API_KEY}
-      - SERIES_SONARR_API_KEY=${SERIES_SONARR_API_KEY}
+      - SONARR_API_KEY=${SONARR_API_KEY}
       - RADARR_API_KEY=${RADARR_API_KEY}
   # authelia:
   #   image: authelia/authelia:latest

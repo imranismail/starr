@@ -22,7 +22,7 @@ I personally use this as my daily driver and will continue to maintain the stack
 
 1. `cp .env.example .env`
 2. Generate API key for each Radarr/Sonarr/Prowlarr apps using `openssl rand -hex 16`
-3. Replace `SERIES_SONARR_API_KEY`, `ANIME_SONARR_API_KEY`, `RADARR_API_KEY`, `PROWLARR_API_KEY` with the generated key
+3. Replace `SONARR_API_KEY`, `RADARR_API_KEY`, `PROWLARR_API_KEY` with the generated key
 4. Replace `HOSTNAME` with your desired public hostname
 5. Replace `TIMEZONE` with your timezone
 6. Replace `LETSENCRYPT_EMAIL` with your email address

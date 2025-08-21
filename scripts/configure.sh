@@ -11,15 +11,13 @@ install() {
   local OVERSEERR_TEMPLATE=""
   local OVERSEERR_OUTPUT="/dev/stdout"
   local RADARR_OUTPUT="/dev/stdout"
-  local SERIES_SONARR_OUTPUT="/dev/stdout"
-  local ANIME_SONARR_OUTPUT="/dev/stdout"
+  local SONARR_OUTPUT="/dev/stdout"
   local PROWLARR_OUTPUT="/dev/stdout"
 
   if [ "$ACTION" == "--apply" ]; then
     OVERSEERR_OUTPUT="overseerr/settings.json"
     RADARR_OUTPUT="radarr/config.xml"
-    SERIES_SONARR_OUTPUT="series-sonarr/config.xml"
-    ANIME_SONARR_OUTPUT="anime-sonarr/config.xml"
+    SONARR_OUTPUT="sonarr/config.xml"
     PROWLARR_OUTPUT="prowlarr/config.xml"
   fi
 
@@ -34,8 +32,7 @@ install() {
   fi
 
   sed -e "s/\${RADARR_API_KEY}/$RADARR_API_KEY/g" \
-      -e "s/\${SERIES_SONARR_API_KEY}/$SERIES_SONARR_API_KEY/g" \
-      -e "s/\${ANIME_SONARR_API_KEY}/$ANIME_SONARR_API_KEY/g" \
+      -e "s/\${SONARR_API_KEY}/$SONARR_API_KEY/g" \
       -e "s/\${PROWLARR_API_KEY}/$PROWLARR_API_KEY/g" \
       <<< "$OVERSEERR_TEMPLATE" > "$OVERSEERR_OUTPUT"
 
@@ -55,18 +52,8 @@ install() {
     echo ""
   fi
 
-  sed -e "s/\${SERIES_SONARR_API_KEY}/$SERIES_SONARR_API_KEY/g" \
-    < series-sonarr/config.xml.template > "$SERIES_SONARR_OUTPUT"
-
-  if [ "$ACTION" == "--dry-run" ]; then
-    echo ""
-    echo ""
-    echo "🟢 Would generate anime-sonarr/config.xml"
-    echo ""
-  fi
-
-  sed -e "s/\${ANIME_SONARR_API_KEY}/$ANIME_SONARR_API_KEY/g" \
-    < anime-sonarr/config.xml.template > "$ANIME_SONARR_OUTPUT"
+  sed -e "s/\${SONARR_API_KEY}/$SONARR_API_KEY/g" \
+    < sonarr/config.xml.template > "$SONARR_OUTPUT"
 
   if [ "$ACTION" == "--dry-run" ]; then
     echo ""

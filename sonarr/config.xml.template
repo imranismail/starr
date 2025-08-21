@@ -4,14 +4,14 @@
   <SslPort>9898</SslPort>
   <EnableSsl>False</EnableSsl>
   <LaunchBrowser>True</LaunchBrowser>
-  <ApiKey>${ANIME_SONARR_API_KEY}</ApiKey>
+  <ApiKey>${SONARR_API_KEY}</ApiKey>
   <AuthenticationMethod>External</AuthenticationMethod>
   <AuthenticationRequired>Enabled</AuthenticationRequired>
   <Branch>main</Branch>
   <LogLevel>info</LogLevel>
   <SslCertPath></SslCertPath>
   <SslCertPassword></SslCertPassword>
-  <UrlBase>/anime-sonarr</UrlBase>
+  <UrlBase>/sonarr</UrlBase>
   <InstanceName>Anime Sonarr</InstanceName>
   <UpdateMechanism>Docker</UpdateMechanism>
 </Config>

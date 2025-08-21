@@ -9,8 +9,8 @@
 !scripts/
 !scripts/*
 
-!anime-sonarr/
-!anime-sonarr/config.xml.template
+!sonarr/
+!sonarr/config.xml.template
 
 !authelia/
 !authelia/.gitkeep
@@ -27,9 +27,6 @@
 !recyclarr/
 !recyclarr/settings.yml
 !recyclarr/recyclarr.yml
-
-!series-sonarr/
-!series-sonarr/config.xml.template
 
 !traefik/
 !treafik/.gitkeep
