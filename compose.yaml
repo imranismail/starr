@@ -22,8 +22,6 @@ services:
       - --entrypoints.web.http.redirections.entrypoint.permanent=true
       - --accesslog=true
       - --log.level=DEBUG
-    extra_hosts:
-      - host.docker.internal:172.17.0.1
     ports:
       - 80:80
       - 443:443
