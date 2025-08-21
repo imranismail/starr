@@ -1,7 +1,7 @@
 *
 
 !.gitignore
-!docker-compose.yaml
+!compose.yaml
 !Makefile
 !.env.example
 !README.md
