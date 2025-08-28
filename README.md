@@ -1,22 +1,30 @@
 # Overview
 
-This project provides a comprehensive setup for managing and automating your media download and organization using Radarr, Sonarr, Prowlarr, and Overseer. It is designed to be easy to configure and run, with a focus on providing a unified interface for all your media needs.
+This repository is a media automation stack that helps people automatically download and organize their TV shows and movies.
 
-The setup process involves generating API keys for each of the applications, setting up your desired hostname, timezone, email address for Let's Encrypt, and specifying the directory for media storage on your host machine. The project uses a Makefile for easy configuration and startup.
+Think of this as a "smart home theater assistant" that:
 
-Once the setup is complete, you can access the Overseer interface via your specified hostname or `localhost:5055`. From there, you can configure each of the *arr (starr which is what the repo name is inspired from) apps
+1. Finds content - Automatically searches for TV shows and movies you want across various sources on the internet
+2. Downloads content - Grabs the files when they become available
+3. Organizes everything - Sorts and renames files properly so your media library stays neat and organized
+4. Provides a nice interface - Gives you a web dashboard where you can request shows/movies and see what's available
 
-For users on Windows Subsystem for Linux (WSL), additional configuration for Root Folders/Folder Mapping is required.
+What it includes:
+- Overseerr - The main interface where you request movies/TV shows
+- Sonarr - Manages TV show downloads and organization
+- Radarr - Manages movie downloads and organization
+- Prowlarr - Searches across multiple sources to find content
+- qBittorrent - Downloads the actual files
 
-I personally use this as my daily driver and will continue to maintain the stack as the starr landscape changes, I aim to reduce the number of steps as much as possible.
+In simple terms: Instead of manually searching for and downloading shows/movies yourself, you just tell this system what you want to watch, and it automatically finds, downloads, and organizes everything for you. You access it through a web browser like Netflix, but for your personal collection.
+
+The repository provides an easy Docker-based setup that runs all these applications together with minimal configuration required.
 
 # Prerequisites
 
 1. Docker
 2. GNU Make (should be installed by default on most unix systems)
-3. sed (should be installed by default on most unix systems)
-4. bash (should be installed by default on most unix systems)
-6. openssl (for generating API keys, you can also just use random string generator)
+3. openssl (for generating API keys, you can also just use random string generator)
 
 # Getting Started
 
@@ -26,7 +34,6 @@ I personally use this as my daily driver and will continue to maintain the stack
 - Replace `TIMEZONE` with your timezone
 - Replace `MEDIA_DIR` with path to where you'll be storing media on your host machine
 - Replace `USER_ID` and `GROUP_ID` with your host user id and group -
-- Run `make configure-test`, verify the config then run `make configure`
 - Run `make start`
 - Visit the `HOSTNAME` or `localhost:5055` and configure `Overseer` using the wizard
 - For each Radarr/Sonarr/Prowlarr apps, configure the `Download Client`, I use `qbittorrent`
@@ -34,4 +41,7 @@ I personally use this as my daily driver and will continue to maintain the stack
 
 # Exposing Services
 
+- Follow [this guide](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel) to setup Cloudflare Tunnel
 - Replace `CLOUDFLARE_TUNNEL_TOKEN` with your Cloudflare Tunnel token
+- Run `make tunnel` to start the tunnel
+- Configure Cloudflare Access to enable zero-trust access to your services
