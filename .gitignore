@@ -2,6 +2,7 @@
 
 !.gitignore
 !compose.yaml
+!compose.cloudflared.yaml
 !Makefile
 !.env.example
 !README.md
@@ -11,9 +12,6 @@
 
 !sonarr/
 !sonarr/config.xml.template
-
-!authelia/
-!authelia/.gitkeep
 
 !overseerr/
 !overseerr/settings.json.partial
@@ -28,5 +26,6 @@
 !recyclarr/settings.yml
 !recyclarr/recyclarr.yml
 
-!traefik/
-!treafik/.gitkeep
+# !n8n/
+# !n8n/.gitkeep
+# !compose.n8n.yaml
