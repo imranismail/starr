@@ -2,7 +2,7 @@ ifneq (,$(wildcard ./.env))
 	include .env
 endif
 
-.PHONY: start stop restart
+.PHONY: start stop restart tunnel
 start:
 	@docker compose pull
 	@docker compose up -d --remove-orphans --build
