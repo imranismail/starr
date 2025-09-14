@@ -2,14 +2,20 @@ ifneq (,$(wildcard ./.env))
 	include .env
 endif
 
-.PHONY: start stop restart tunnel
+.PHONY: start stop restart
 start:
 	@docker compose pull
-	@docker compose up -d --remove-orphans --build
+	@if [ -n "$(CLOUDFLARE_TUNNEL_TOKEN)" ]; then \
+		docker compose -f compose.yaml -f compose.cloudflared.yaml up -d --remove-orphans --build; \
+	else \
+		docker compose -f compose.yaml up -d --remove-orphans --build; \
+	fi
 stop:
-	@docker compose down
+	@if [ -n "$(CLOUDFLARE_TUNNEL_TOKEN)" ]; then \
+		docker compose -f compose.yaml -f compose.cloudflared.yaml down; \
+	else \
+		docker compose -f compose.yaml down; \
+	fi
 restart:
 	@make stop
 	@make start
-tunnel:
-	@docker compose -f compose.yaml -f compose.cloudflared.yaml up -d --remove-orphans
