@@ -1,40 +1,4 @@
 services:
-  traefik:
-    image: traefik:v3.0
-    container_name: traefik
-    environment:
-      - PGID=${GROUP_ID}
-      - PUID=${USER_ID}
-      - TZ=${TIMEZONE}
-      - TRAEFIK_LOG_LEVEL=DEBUG
-    command:
-      - --api.insecure=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entryPoints.web.address=:80
-      - --entryPoints.websecure.address=:443
-      - --certificatesresolvers.letsencrypt.acme.httpchallenge=true
-      - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
-      - --certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}
-      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
-      - --entrypoints.web.http.redirections.entryPoint.to=websecure
-      - --entrypoints.web.http.redirections.entryPoint.scheme=https
-      - --entrypoints.web.http.redirections.entrypoint.permanent=true
-      - --accesslog=true
-      - --log.level=DEBUG
-    ports:
-      - 80:80
-      - 443:443
-    restart: unless-stopped
-    volumes:
-      - ./traefik/letsencrypt:/letsencrypt
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    depends_on:
-      - sonarr
-      - radarr
-      - prowlarr
-      - overseerr
-      - recyclarr
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
     container_name: overseerr
@@ -48,12 +12,6 @@ services:
       - PUID=${USER_ID}
       - TZ=${TIMEZONE}
       - LOG_LEVEL=${LOG_LEVEL}
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.overseerr.rule=(Host(`overseer.${HOSTNAME}`))
-      - traefik.http.routers.overseerr.tls=true
-      - traefik.http.routers.overseerr.tls.certresolver=letsencrypt
-      # - traefik.http.routers.overseerr.middlewares=authelia@docker
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -68,12 +26,6 @@ services:
       - PUID=${USER_ID}
       - TZ=${TIMEZONE}
       - LOG_LEVEL=${LOG_LEVEL}
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.sonarr.rule=(Host(`sonarr.${HOSTNAME}`))
-      - traefik.http.routers.sonarr.tls=true
-      - traefik.http.routers.sonarr.tls.certresolver=letsencrypt
-      # - traefik.http.routers.anime-sonarr.middlewares=authelia@docker
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -88,12 +40,6 @@ services:
       - PUID=${USER_ID}
       - TZ=${TIMEZONE}
       - LOG_LEVEL=${LOG_LEVEL}
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.radarr.rule=(Host(`radarr.${HOSTNAME}`))
-      - traefik.http.routers.radarr.tls=true
-      - traefik.http.routers.radarr.tls.certresolver=letsencrypt
-      # - traefik.http.routers.radarr.middlewares=authelia@docker
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -107,12 +53,8 @@ services:
       - PUID=${USER_ID}
       - TZ=${TIMEZONE}
       - LOG_LEVEL=${LOG_LEVEL}
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.prowlarr.rule=(Host(`prowlarr.${HOSTNAME}`))
-      - traefik.http.routers.prowlarr.tls=true
-      - traefik.http.routers.prowlarr.tls.certresolver=letsencrypt
-      # - traefik.http.routers.prowlarr.middlewares=authelia@docker
+    depends_on:
+      - flaresolverr
   recyclarr:
     image: recyclarr/recyclarr
     container_name: recyclarr
@@ -127,24 +69,14 @@ services:
       - RECYCLARR_CREATE_CONFIG=true
       - SONARR_API_KEY=${SONARR_API_KEY}
       - RADARR_API_KEY=${RADARR_API_KEY}
-  # authelia:
-  #   image: authelia/authelia:latest
-  #   container_name: authelia
-  #   volumes:
-  #     - ./authelia:/config
-  #   ports:
-  #     - 9091:9091
-  #   restart: unless-stopped
-  #   environment:
-  #     - PGID=${GROUP_ID}
-  #     - PUID=${USER_ID}
-  #     - TZ=${TIMEZONE}
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.prowlarr.rule=(Host(`${HOSTNAME}`) && PathPrefix(`/authelia`))
-  #     - traefik.http.routers.authelia.entrypoints=https
-  #     - traefik.http.routers.authelia.tls=true
-  #     - traefik.http.routers.authelia.tls.certresolver=letsencrypt
-  #     - traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/authz/forward-auth  # yamllint disable-line rule:line-length
-  #     - traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true
-  #     - traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email  # yamllint disable-line rule:line-length
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    ports:
+      - 8191:8191
+    restart: unless-stopped
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=${TIMEZONE}
