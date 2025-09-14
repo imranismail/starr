@@ -41,4 +41,7 @@ The repository provides an easy Docker-based setup that runs all these applicati
 
 # Exposing Services
 
+- Follow [this guide](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel) to setup Cloudflare Tunnel
 - Replace `CLOUDFLARE_TUNNEL_TOKEN` with your Cloudflare Tunnel token
+- Run `make tunnel` to start the tunnel
+- Configure Cloudflare Access to enable zero-trust access to your services
