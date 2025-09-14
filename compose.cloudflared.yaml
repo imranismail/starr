@@ -11,5 +11,4 @@ services:
       - sonarr
       - radarr
       - prowlarr
-      - n8n
       - recyclarr

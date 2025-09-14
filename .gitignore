@@ -31,7 +31,3 @@
 
 !Dockerfile
 !entrypoint.sh
-
-# !n8n/
-# !n8n/.gitkeep
-# !compose.n8n.yaml

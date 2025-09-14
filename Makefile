@@ -11,3 +11,5 @@ stop:
 restart:
 	@make stop
 	@make start
+tunnel:
+	@docker compose -f compose.yaml -f compose.cloudflared.yaml up -d --remove-orphans
