@@ -125,13 +125,15 @@ services:
       - ./sonarr:/app/sonarr
       - ./radarr:/app/radarr
       - ./prowlarr:/app/prowlarr
-      - ./config:/app/.markers
     environment:
       - RADARR_API_KEY=${RADARR_API_KEY}
       - SONARR_API_KEY=${SONARR_API_KEY}
       - PROWLARR_API_KEY=${PROWLARR_API_KEY}
+      - PROWLARR_URL=http://prowlarr:9696
+      - FLARESOLVERR_URL=http://flaresolverr:8191
     depends_on:
       prowlarr:
         condition: service_healthy
       flaresolverr:
         condition: service_healthy
+    command: ["--apply"]

@@ -26,8 +26,8 @@
 !recyclarr/settings.yml
 !recyclarr/recyclarr.yml
 
-!config/
-!config/.gitkeep
-
 !Dockerfile
 !entrypoint.sh
+!package.json
+!package-lock.json
+!index.js

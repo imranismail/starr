@@ -1,21 +1,17 @@
-FROM curlimages/curl:8.4.0
+FROM node:20-alpine
 
 # Install dependencies
-USER root
-RUN apk add --no-cache bash jq sed
-USER curl_user
+RUN apk add --no-cache bash curl
 
-# Copy configuration scripts
-COPY scripts/configure.sh /usr/local/bin/configure.sh
-COPY scripts/configure-flaresolverr.sh /usr/local/bin/configure-flaresolverr.sh
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-
-# Make scripts executable
-USER root
-RUN chmod +x /usr/local/bin/configure.sh /usr/local/bin/configure-flaresolverr.sh /usr/local/bin/entrypoint.sh
-USER curl_user
-
-# Set working directory to match the expected paths
+# Set working directory first
 WORKDIR /app
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+# Copy package files first for better caching
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Copy main script
+COPY index.js ./
+RUN chmod +x index.js
+
+ENTRYPOINT ["node", "index.js"]
