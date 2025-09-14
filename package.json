@@ -1,0 +1,29 @@
+{
+  "name": "starr",
+  "version": "1.0.0",
+  "description": "This project provides a comprehensive setup for managing and automating your media download and organization using Radarr, Sonarr, Prowlarr, and Overseer. It is designed to be easy to configure and run, with a focus on providing a unified interface for all your media needs.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "configure": "node index.js",
+    "configure:apply": "node index.js --apply",
+    "configure:config-only": "node index.js --config-only",
+    "configure:flaresolverr-only": "node index.js --flaresolverr-only",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imranismail/starr.git"
+  },
+  "keywords": ["overseerr", "radarr", "sonarr", "prowlarr", "flaresolverr", "media", "automation", "docker"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/imranismail/starr/issues"
+  },
+  "homepage": "https://github.com/imranismail/starr#readme",
+  "dependencies": {
+    "commander": "^14.0.1"
+  }
+}

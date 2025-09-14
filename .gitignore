@@ -26,6 +26,8 @@
 !recyclarr/settings.yml
 !recyclarr/recyclarr.yml
 
-# !n8n/
-# !n8n/.gitkeep
-# !compose.n8n.yaml
+!Dockerfile
+!entrypoint.sh
+!package.json
+!package-lock.json
+!index.js

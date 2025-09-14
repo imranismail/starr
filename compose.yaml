@@ -12,6 +12,12 @@ services:
       - PUID=${USER_ID}
       - TZ=${TIMEZONE}
       - LOG_LEVEL=${LOG_LEVEL}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5055/api/v1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -26,6 +32,13 @@ services:
       - PUID=${USER_ID}
       - TZ=${TIMEZONE}
       - LOG_LEVEL=${LOG_LEVEL}
+      - SONARR_API_KEY=${SONARR_API_KEY}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8989/api/v3/health -H 'X-Api-Key: $$SONARR_API_KEY' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -40,6 +53,13 @@ services:
       - PUID=${USER_ID}
       - TZ=${TIMEZONE}
       - LOG_LEVEL=${LOG_LEVEL}
+      - RADARR_API_KEY=${RADARR_API_KEY}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:7878/api/v3/health -H 'X-Api-Key: $$RADARR_API_KEY' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -53,8 +73,15 @@ services:
       - PUID=${USER_ID}
       - TZ=${TIMEZONE}
       - LOG_LEVEL=${LOG_LEVEL}
+      - PROWLARR_API_KEY=${PROWLARR_API_KEY}
     depends_on:
       - flaresolverr
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9696/api/v1/health -H \"X-Api-Key: $$PROWLARR_API_KEY\" || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
   recyclarr:
     image: recyclarr/recyclarr
     container_name: recyclarr
@@ -80,3 +107,33 @@ services:
       - LOG_HTML=false
       - CAPTCHA_SOLVER=none
       - TZ=${TIMEZONE}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8191/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+  config:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: config
+    restart: "no"
+    user: ${USER_ID}:${GROUP_ID}
+    volumes:
+      - ./overseerr:/app/overseerr
+      - ./sonarr:/app/sonarr
+      - ./radarr:/app/radarr
+      - ./prowlarr:/app/prowlarr
+    environment:
+      - RADARR_API_KEY=${RADARR_API_KEY}
+      - SONARR_API_KEY=${SONARR_API_KEY}
+      - PROWLARR_API_KEY=${PROWLARR_API_KEY}
+      - PROWLARR_URL=http://prowlarr:9696
+      - FLARESOLVERR_URL=http://flaresolverr:8191
+    depends_on:
+      prowlarr:
+        condition: service_healthy
+      flaresolverr:
+        condition: service_healthy
+    command: ["--apply"]
