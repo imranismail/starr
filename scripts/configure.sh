@@ -2,9 +2,7 @@
 
 set -eou pipefail
 
-jq() {
-  docker run --rm -i -v "$PWD:$PWD" -w "$PWD" ghcr.io/jqlang/jq:latest "$@"
-}
+# jq is now installed in the container
 
 install() {
   local ACTION="${1:---dry-run}"
@@ -21,9 +19,13 @@ install() {
     PROWLARR_OUTPUT="prowlarr/config.xml"
   fi
 
-  docker compose run --rm overseerr true > /dev/null
-
-  OVERSEERR_TEMPLATE=$(jq -s 'reduce .[] as $x ({}; . * $x)' overseerr/settings.json overseerr/settings.json.partial)
+  # Check if required files exist
+  if [ ! -f "overseerr/settings.json" ] || [ ! -f "overseerr/settings.json.partial" ]; then
+    echo "Warning: Overseerr settings files not found, skipping overseerr configuration"
+    OVERSEERR_TEMPLATE="{}"
+  else
+    OVERSEERR_TEMPLATE=$(jq -s 'reduce .[] as $x ({}; . * $x)' overseerr/settings.json overseerr/settings.json.partial)
+  fi
 
   if [ "$ACTION" == "--dry-run" ]; then
     echo ""
