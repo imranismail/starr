@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "types": ["node", "jest"]
+  },
+  "include": ["src/**/*", "global.d.ts"]
+}

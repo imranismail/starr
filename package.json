@@ -2,20 +2,37 @@
   "name": "starr",
   "version": "1.0.0",
   "description": "This project provides a comprehensive setup for managing and automating your media download and organization using Radarr, Sonarr, Prowlarr, and Overseer. It is designed to be easy to configure and run, with a focus on providing a unified interface for all your media needs.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node index.js",
-    "configure": "node index.js",
-    "configure:apply": "node index.js --apply",
-    "configure:config-only": "node index.js --config-only",
-    "configure:flaresolverr-only": "node index.js --flaresolverr-only",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "dev": "ts-node src/index.ts",
+    "start": "npm run build && node dist/index.js",
+    "configure": "npm run dev",
+    "configure:apply": "npm run dev -- --apply",
+    "configure:config-only": "npm run dev -- --config-only",
+    "configure:flaresolverr-only": "npm run dev -- --flaresolverr-only",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --coverage --passWithNoTests --watchAll=false",
+    "lint": "tsc --noEmit",
+    "clean": "rm -rf dist"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/imranismail/starr.git"
   },
-  "keywords": ["overseerr", "radarr", "sonarr", "prowlarr", "flaresolverr", "media", "automation", "docker"],
+  "keywords": [
+    "overseerr",
+    "radarr",
+    "sonarr",
+    "prowlarr",
+    "flaresolverr",
+    "media",
+    "automation",
+    "docker"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
@@ -24,6 +41,24 @@
   },
   "homepage": "https://github.com/imranismail/starr#readme",
   "dependencies": {
-    "commander": "^14.0.1"
+    "axios": "^1.12.2",
+    "commander": "^14.0.1",
+    "inversify": "^6.2.1",
+    "reflect-metadata": "^0.2.2"
+  },
+  "devDependencies": {
+    "@golevelup/ts-jest": "^0.7.0",
+    "@jest/globals": "^30.1.2",
+    "@suites/di.inversify": "^3.0.1",
+    "@suites/doubles.jest": "^3.0.1",
+    "@suites/unit": "^3.0.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.4.0",
+    "audit-ci": "^7.1.0",
+    "babel-jest": "^30.1.2",
+    "jest": "^30.1.3",
+    "ts-jest": "^29.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }

@@ -31,3 +31,12 @@
 !package.json
 !package-lock.json
 !index.js
+!jest.config.js
+!babel.config.js
+!tsconfig.json
+!src/
+!src/**
+!global.d.ts
+
+!.github/
+!.github/**
