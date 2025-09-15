@@ -48,5 +48,17 @@ The repository provides an easy Docker-based setup that runs all these applicati
 
 - Follow [this guide](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel) to setup Cloudflare Tunnel
 - Replace `CLOUDFLARE_TUNNEL_TOKEN` with your Cloudflare Tunnel token
-- Run `make tunnel` to start the tunnel
-- Configure Cloudflare Access to enable zero-trust access to your services
+- Run `make start` to start again with the tunnel
+- Now that the tunnel is running alongside the stack, you can access the applications via the tunnel URL
+- The tunnel should be able to resolve the service names defined in the `docker-compose.yml` file (e.g. `overseerr`, `sonarr`, `radarr`, `prowlarr`)
+- Configure applications in Cloudflare Zero Trust > Access > Applications
+    - Example: overseerr.yourdomain.com -> 'http://overseerr:5055'
+    - Example: sonarr.yourdomain.com -> 'http://sonarr:8989
+    - Example: radarr.yourdomain.com -> 'http://radarr:7878'
+    - Example: prowlarr.yourdomain.com -> 'http://prowlarr:9696'
+- In order to secure access to your applications, you can set up authentication methods in Cloudflare Zero Trust
+    - Example: Google OAuth, GitHub OAuth, One-time PIN, etc.
+- Once configured, configure policies to restrict access to your applications
+    - Example: Only allow access from specific email domains, specific emails, or specific IP ranges
+- After setting up the applications and policies, you can access your applications securely via the Cloudflare Access App Launcher or directly via the URLs you configured
+- Congratulations! You have successfully exposed your media automation stack services securely using Cloudflare Tunnel and Zero Trust
