@@ -1,6 +1,6 @@
 # Starr Media Automation Stack
 
-[![CI](https://github.com/imranismail/starr/actions/workflows/ci.yml/badge.svg)](https://github.com/imranismail/starr/actions/workflows/ci.yml)
+[![CI](https://github.com/imranismail/starr/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/imranismail/starr/actions/workflows/ci.yml)
 
 ## Overview
 
