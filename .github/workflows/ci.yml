@@ -55,14 +55,6 @@ jobs:
       - name: Run tests
         run: npm run test:ci
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          file: ./coverage/lcov.info
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: false
-
   build:
     name: Build Verification
     runs-on: ubuntu-latest

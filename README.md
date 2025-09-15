@@ -1,7 +1,6 @@
 # Starr Media Automation Stack
 
 [![CI](https://github.com/imranismail/starr/actions/workflows/ci.yml/badge.svg)](https://github.com/imranismail/starr/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/imranismail/starr/branch/master/graph/badge.svg)](https://codecov.io/gh/imranismail/starr)
 
 ## Overview
 
