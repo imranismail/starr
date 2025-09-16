@@ -1,4 +1,4 @@
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import { ConfigTemplate } from '../types';
 import { FileUtils } from '../utils/file';
 import { EnvService } from './env-service';
@@ -10,10 +10,7 @@ export class ConfigService {
     private envService: EnvService
   ) {}
 
-  generateOverseerrConfig(): string {
-    const settingsPath = 'overseerr/settings.json';
-    const partialPath = 'overseerr/settings.json.partial';
-
+  generateOverseerrConfig(settingsPath, partialPath): string {
     // Check if files exist
     if (!this.fileUtils.fileExists(settingsPath) || !this.fileUtils.fileExists(partialPath)) {
       console.warn('⚠️  Warning: Overseerr settings files not found, skipping overseerr configuration');
@@ -48,8 +45,13 @@ export class ConfigService {
     return [
       {
         name: 'Overseerr',
-        content: this.generateOverseerrConfig(),
+        content: this.generateOverseerrConfig('overseerr/settings.json', 'overseerr/settings.json.partial'),
         outputPath: 'overseerr/settings.json'
+      },
+      {
+        name: 'Jellyseerr',
+        content: this.generateOverseerrConfig('jellyseerr/settings.json', 'jellyseerr/settings.json.partial'),
+        outputPath: 'jellyseerr/settings.json'
       },
       {
         name: 'Radarr',

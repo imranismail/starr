@@ -1,4 +1,4 @@
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import { FlaresolverrConfig } from '../types';
 import { ProwlarrService } from './prowlarr-service';
 import { EnvService } from './env-service';

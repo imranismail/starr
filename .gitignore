@@ -16,6 +16,9 @@
 !overseerr/
 !overseerr/settings.json.partial
 
+!jellyseerr/
+!jellyseerr/settings.json.partial
+
 !prowlarr/
 !prowlarr/config.xml.template
 

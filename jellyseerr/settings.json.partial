@@ -1,0 +1,47 @@
+{
+  "radarr": [
+    {
+      "name": "Radarr",
+      "hostname": "radarr",
+      "port": 7878,
+      "apiKey": "${RADARR_API_KEY}",
+      "useSsl": false,
+      "activeProfileId": 7,
+      "activeProfileName": "Remux + WEB 2160p",
+      "activeDirectory": "/data/Movies",
+      "is4k": false,
+      "minimumAvailability": "released",
+      "tags": [],
+      "isDefault": true,
+      "syncEnabled": true,
+      "preventSearch": false,
+      "tagRequests": true,
+      "id": 0
+    }
+  ],
+  "sonarr": [
+    {
+      "name": "Sonarr",
+      "hostname": "sonarr",
+      "port": 8989,
+      "apiKey": "${SONARR_API_KEY}",
+      "useSsl": false,
+      "activeProfileId": 9,
+      "activeProfileName": "WEB-2160p",
+      "activeDirectory": "/data/Series",
+      "animeSeriesType": "anime",
+      "activeAnimeProfileId": 8,
+      "activeAnimeProfileName": "Remux-1080p - Anime",
+      "activeAnimeDirectory": "/data/Anime",
+      "tags": [],
+      "animeTags": [],
+      "is4k": false,
+      "isDefault": true,
+      "enableSeasonFolders": true,
+      "syncEnabled": true,
+      "preventSearch": false,
+      "tagRequests": false,
+      "id": 0
+    }
+  ]
+}

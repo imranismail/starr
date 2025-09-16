@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import { EnvService } from './env-service';
 import { ProwlarrConfig, Tag, Proxy, ProxyField } from '../types';
 

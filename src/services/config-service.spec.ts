@@ -46,7 +46,7 @@ describe('ConfigService', () => {
       envService.subst
         .mockReturnValue(JSON.stringify(merged, null, 2));
 
-      const result = configService.generateOverseerrConfig();
+      const result = configService.generateOverseerrConfig('overseerr/settings.json', 'overseerr/settings.json.partial');
 
       expect(result).toBe(JSON.stringify(merged, null, 2));
       expect(fileUtils.fileExists).toHaveBeenCalledWith('overseerr/settings.json');
@@ -59,7 +59,7 @@ describe('ConfigService', () => {
     test('should return empty object and warn when files do not exist', () => {
       fileUtils.fileExists.mockReturnValue(false);
 
-      const result = configService.generateOverseerrConfig();
+      const result = configService.generateOverseerrConfig('overseerr/settings.json', 'overseerr/settings.json.partial');
 
       expect(result).toBe('{}');
       expect(mockConsoleWarn).toHaveBeenCalledWith(
@@ -73,7 +73,7 @@ describe('ConfigService', () => {
         throw new Error('Invalid JSON');
       });
 
-      const result = configService.generateOverseerrConfig();
+      const result = configService.generateOverseerrConfig('overseerr/settings.json', 'overseerr/settings.json.partial');
 
       expect(result).toBe('{}');
       expect(mockConsoleError).toHaveBeenCalledWith('❌ Error processing Overseerr settings:', 'Invalid JSON');
@@ -107,29 +107,35 @@ describe('ConfigService', () => {
 
       envService.subst
         .mockReturnValueOnce('{}')
+        .mockReturnValueOnce('{}')
         .mockReturnValueOnce('radarr-config')
         .mockReturnValueOnce('sonarr-config')
         .mockReturnValueOnce('prowlarr-config');
 
       const templates = configService.getConfigTemplates();
 
-      expect(templates).toHaveLength(4);
+      expect(templates).toHaveLength(5);
       expect(templates[0]).toEqual({
         name: 'Overseerr',
         content: '{}',
         outputPath: 'overseerr/settings.json'
       });
       expect(templates[1]).toEqual({
+        name: 'Jellyseerr',
+        content: '{}',
+        outputPath: 'jellyseerr/settings.json'
+      });
+      expect(templates[2]).toEqual({
         name: 'Radarr',
         content: 'radarr-config',
         outputPath: 'radarr/config.xml'
       });
-      expect(templates[2]).toEqual({
+      expect(templates[3]).toEqual({
         name: 'Sonarr',
         content: 'sonarr-config',
         outputPath: 'sonarr/config.xml'
       });
-      expect(templates[3]).toEqual({
+      expect(templates[4]).toEqual({
         name: 'Prowlarr',
         content: 'prowlarr-config',
         outputPath: 'prowlarr/config.xml'
