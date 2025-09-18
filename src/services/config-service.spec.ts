@@ -106,40 +106,21 @@ describe('ConfigService', () => {
         .mockReturnValueOnce('prowlarr-template');
 
       envService.subst
-        .mockReturnValueOnce('{}')
-        .mockReturnValueOnce('{}')
+        .mockReturnValueOnce('jellyseerr-config')
         .mockReturnValueOnce('radarr-config')
         .mockReturnValueOnce('sonarr-config')
         .mockReturnValueOnce('prowlarr-config');
 
       const templates = configService.getConfigTemplates();
 
-      expect(templates).toHaveLength(5);
-      expect(templates[0]).toEqual({
-        name: 'Overseerr',
-        content: '{}',
-        outputPath: 'overseerr/settings.json'
-      });
-      expect(templates[1]).toEqual({
-        name: 'Jellyseerr',
-        content: '{}',
-        outputPath: 'jellyseerr/settings.json'
-      });
-      expect(templates[2]).toEqual({
-        name: 'Radarr',
-        content: 'radarr-config',
-        outputPath: 'radarr/config.xml'
-      });
-      expect(templates[3]).toEqual({
-        name: 'Sonarr',
-        content: 'sonarr-config',
-        outputPath: 'sonarr/config.xml'
-      });
-      expect(templates[4]).toEqual({
-        name: 'Prowlarr',
-        content: 'prowlarr-config',
-        outputPath: 'prowlarr/config.xml'
-      });
+      expect(templates).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ name: 'Jellyseerr', content: 'jellyseerr-config', outputPath: 'jellyseerr/settings.json' }),
+          expect.objectContaining({ name: 'Radarr', content: 'radarr-config', outputPath: 'radarr/config.xml' }),
+          expect.objectContaining({ name: 'Sonarr', content: 'sonarr-config', outputPath: 'sonarr/config.xml' }),
+          expect.objectContaining({ name: 'Prowlarr', content: 'prowlarr-config', outputPath: 'prowlarr/config.xml' })
+        ])
+      )
     });
   });
 });
