@@ -7,7 +7,7 @@ services:
     environment:
       - CLOUDFLARE_TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
     depends_on:
-      - overseerr
+      - jellyseerr
       - sonarr
       - radarr
       - prowlarr

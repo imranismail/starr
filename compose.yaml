@@ -1,23 +1,4 @@
 services:
-  overseerr:
-    image: lscr.io/linuxserver/overseerr:latest
-    container_name: overseerr
-    volumes:
-      - ./overseerr:/config
-    ports:
-      - 5055:5055
-    restart: unless-stopped
-    environment:
-      - PGID=${GROUP_ID}
-      - PUID=${USER_ID}
-      - TZ=${TIMEZONE}
-      - LOG_LEVEL=${LOG_LEVEL}
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5055/api/v1/status || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr

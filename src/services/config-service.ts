@@ -44,11 +44,6 @@ export class ConfigService {
   getConfigTemplates(): ConfigTemplate[] {
     return [
       {
-        name: 'Overseerr',
-        content: this.generateOverseerrConfig('overseerr/settings.json', 'overseerr/settings.json.partial'),
-        outputPath: 'overseerr/settings.json'
-      },
-      {
         name: 'Jellyseerr',
         content: this.generateOverseerrConfig('jellyseerr/settings.json', 'jellyseerr/settings.json.partial'),
         outputPath: 'jellyseerr/settings.json'
