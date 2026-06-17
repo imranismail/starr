@@ -38,6 +38,7 @@ The repository provides an easy Docker-based setup that runs all these applicati
 - Replace `TIMEZONE` with your timezone
 - Replace `MEDIA_DIR` with path to where you'll be storing media on your host machine
 - Replace `USER_ID` and `GROUP_ID` with your host user id and group -
+- Replace `DNS_ZONE` with your domain if you want to use Cloudflare Tunnel
 - Run `make start`
 - Visit the `HOSTNAME` or `localhost:5055` and configure `Overseer` using the wizard
 - For each Radarr/Sonarr/Prowlarr apps, configure the `Download Client`, I use `qbittorrent`
@@ -51,10 +52,10 @@ The repository provides an easy Docker-based setup that runs all these applicati
 - Now that the tunnel is running alongside the stack, you can access the applications via the tunnel URL
 - The tunnel should be able to resolve the service names defined in the `docker-compose.yml` file (e.g. `seerr`, `sonarr`, `radarr`, `prowlarr`)
 - Configure applications in Cloudflare Zero Trust > Access > Applications
-    - Example: `seerr.yourdomain.com` -> `http://seerr:5055`
-    - Example: `sonarr.yourdomain.com` -> `http://sonarr:8989`
-    - Example: `radarr.yourdomain.com` -> `http://radarr:7878`
-    - Example: `prowlarr.yourdomain.com` -> `http://prowlarr:9696`
+    - Example: `seerr.${DNS_ZONE}` -> `http://seerr:5055`
+    - Example: `sonarr.${DNS_ZONE}` -> `http://sonarr:8989`
+    - Example: `radarr.${DNS_ZONE}` -> `http://radarr:7878`
+    - Example: `prowlarr.${DNS_ZONE}` -> `http://prowlarr:9696`
 - In order to secure access to your applications, you can set up authentication methods in Cloudflare Zero Trust
     - Example: Google OAuth, GitHub OAuth, One-time PIN, etc.
 - Once configured, configure policies to restrict access to your applications
