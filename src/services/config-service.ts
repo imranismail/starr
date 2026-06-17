@@ -10,10 +10,10 @@ export class ConfigService {
     private envService: EnvService
   ) {}
 
-  generateOverseerrConfig(settingsPath, partialPath): string {
+  generateseerrConfig(settingsPath, partialPath): string {
     // Check if files exist
     if (!this.fileUtils.fileExists(settingsPath) || !this.fileUtils.fileExists(partialPath)) {
-      console.warn('⚠️  Warning: Overseerr settings files not found, skipping overseerr configuration');
+      console.warn('⚠️  Warning: seerr settings files not found, skipping seerr configuration');
       return '{}';
     }
 
@@ -31,7 +31,7 @@ export class ConfigService {
 
       return configString;
     } catch (error: any) {
-      console.error('❌ Error processing Overseerr settings:', error.message);
+      console.error('❌ Error processing seerr settings:', error.message);
       return '{}';
     }
   }
@@ -44,9 +44,9 @@ export class ConfigService {
   getConfigTemplates(): ConfigTemplate[] {
     return [
       {
-        name: 'Jellyseerr',
-        content: this.generateOverseerrConfig('jellyseerr/settings.json', 'jellyseerr/settings.json.partial'),
-        outputPath: 'jellyseerr/settings.json'
+        name: 'seerr',
+        content: this.generateseerrConfig('seerr/settings.json', 'seerr/settings.json.partial'),
+        outputPath: 'seerr/settings.json'
       },
       {
         name: 'Radarr',

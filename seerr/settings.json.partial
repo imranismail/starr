@@ -15,6 +15,7 @@
       "isDefault": true,
       "syncEnabled": true,
       "preventSearch": false,
+      "externalUrl": "https://radarr.${DNS_ZONE}",
       "tagRequests": true,
       "id": 0
     }
@@ -38,9 +39,11 @@
       "is4k": false,
       "isDefault": true,
       "enableSeasonFolders": true,
+   "externalUrl": "https://sonarr.${DNS_ZONE}",
       "syncEnabled": true,
       "preventSearch": false,
       "tagRequests": false,
+      "monitorNewItems": "all",
       "id": 0
     }
   ]

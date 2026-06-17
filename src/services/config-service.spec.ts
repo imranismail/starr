@@ -29,7 +29,7 @@ describe('ConfigService', () => {
     mockConsoleError.mockRestore();
   });
 
-  describe('generateOverseerrConfig', () => {
+  describe('generateseerrConfig', () => {
     test('should generate merged config when both files exist', () => {
       const settings = { setting1: 'value1', setting2: 'old_value' };
       const partial = { setting2: 'new_value', setting3: 'value3' };
@@ -46,11 +46,11 @@ describe('ConfigService', () => {
       envService.subst
         .mockReturnValue(JSON.stringify(merged, null, 2));
 
-      const result = configService.generateOverseerrConfig('overseerr/settings.json', 'overseerr/settings.json.partial');
+      const result = configService.generateseerrConfig('seerr/settings.json', 'seerr/settings.json.partial');
 
       expect(result).toBe(JSON.stringify(merged, null, 2));
-      expect(fileUtils.fileExists).toHaveBeenCalledWith('overseerr/settings.json');
-      expect(fileUtils.fileExists).toHaveBeenCalledWith('overseerr/settings.json.partial');
+      expect(fileUtils.fileExists).toHaveBeenCalledWith('seerr/settings.json');
+      expect(fileUtils.fileExists).toHaveBeenCalledWith('seerr/settings.json.partial');
       expect(envService.subst).toHaveBeenCalledWith(
         JSON.stringify(merged, null, 2)
       );
@@ -59,11 +59,11 @@ describe('ConfigService', () => {
     test('should return empty object and warn when files do not exist', () => {
       fileUtils.fileExists.mockReturnValue(false);
 
-      const result = configService.generateOverseerrConfig('overseerr/settings.json', 'overseerr/settings.json.partial');
+      const result = configService.generateseerrConfig('seerr/settings.json', 'seerr/settings.json.partial');
 
       expect(result).toBe('{}');
       expect(mockConsoleWarn).toHaveBeenCalledWith(
-        '⚠️  Warning: Overseerr settings files not found, skipping overseerr configuration'
+        '⚠️  Warning: seerr settings files not found, skipping seerr configuration'
       );
     });
 
@@ -73,10 +73,10 @@ describe('ConfigService', () => {
         throw new Error('Invalid JSON');
       });
 
-      const result = configService.generateOverseerrConfig('overseerr/settings.json', 'overseerr/settings.json.partial');
+      const result = configService.generateseerrConfig('seerr/settings.json', 'seerr/settings.json.partial');
 
       expect(result).toBe('{}');
-      expect(mockConsoleError).toHaveBeenCalledWith('❌ Error processing Overseerr settings:', 'Invalid JSON');
+      expect(mockConsoleError).toHaveBeenCalledWith('❌ Error processing seerr settings:', 'Invalid JSON');
     });
   });
 
@@ -106,7 +106,7 @@ describe('ConfigService', () => {
         .mockReturnValueOnce('prowlarr-template');
 
       envService.subst
-        .mockReturnValueOnce('jellyseerr-config')
+        .mockReturnValueOnce('seerr-config')
         .mockReturnValueOnce('radarr-config')
         .mockReturnValueOnce('sonarr-config')
         .mockReturnValueOnce('prowlarr-config');
@@ -115,7 +115,7 @@ describe('ConfigService', () => {
 
       expect(templates).toEqual(
         expect.arrayContaining([
-          expect.objectContaining({ name: 'Jellyseerr', content: 'jellyseerr-config', outputPath: 'jellyseerr/settings.json' }),
+          expect.objectContaining({ name: 'seerr', content: 'seerr-config', outputPath: 'seerr/settings.json' }),
           expect.objectContaining({ name: 'Radarr', content: 'radarr-config', outputPath: 'radarr/config.xml' }),
           expect.objectContaining({ name: 'Sonarr', content: 'sonarr-config', outputPath: 'sonarr/config.xml' }),
           expect.objectContaining({ name: 'Prowlarr', content: 'prowlarr-config', outputPath: 'prowlarr/config.xml' })

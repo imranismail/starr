@@ -13,11 +13,8 @@
 !sonarr/
 !sonarr/config.xml.template
 
-!overseerr/
-!overseerr/settings.json.partial
-
-!jellyseerr/
-!jellyseerr/settings.json.partial
+!seerr/
+!seerr/settings.json.partial
 
 !prowlarr/
 !prowlarr/config.xml.template

@@ -26,7 +26,7 @@ const program = new Command();
 
 program
   .name('configure')
-  .description('Configuration generator for Overseerr, Radarr, Sonarr, Prowlarr, and FlareSolverr')
+  .description('Configuration generator for seerr, Radarr, Sonarr, Prowlarr, and FlareSolverr')
   .version('1.0.0')
   .option('-a, --apply', 'Apply changes (default: dry run)')
   .option('-c, --config-only', 'Only generate config files, skip FlareSolverr setup')

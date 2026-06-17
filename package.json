@@ -1,7 +1,7 @@
 {
   "name": "starr",
   "version": "1.0.0",
-  "description": "This project provides a comprehensive setup for managing and automating your media download and organization using Radarr, Sonarr, Prowlarr, and Overseer. It is designed to be easy to configure and run, with a focus on providing a unified interface for all your media needs.",
+  "description": "This project provides a comprehensive setup for managing and automating your media download and organization using Radarr, Sonarr, Prowlarr, and seerr. It is designed to be easy to configure and run, with a focus on providing a unified interface for all your media needs.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -24,7 +24,7 @@
     "url": "git+https://github.com/imranismail/starr.git"
   },
   "keywords": [
-    "overseerr",
+    "seerr",
     "radarr",
     "sonarr",
     "prowlarr",
