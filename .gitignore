@@ -1,8 +1,7 @@
 *
 
 !.gitignore
-!compose.yaml
-!compose.cloudflared.yaml
+!docker-compose.yaml
 !Makefile
 !.env.example
 !README.md

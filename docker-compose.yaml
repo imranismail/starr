@@ -1,0 +1,187 @@
+services:
+  cloudflared:
+    container_name: cloudflared
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
+    restart: always
+    environment:
+      - CLOUDFLARE_TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      - seerr
+      - sonarr
+      - radarr
+      - prowlarr
+      - recyclarr
+      - qbittorrent
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    volumes:
+      - ./sonarr:/config
+      - ${MEDIA_DIR}:/data
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    environment:
+      - PGID=${PGID}
+      - PUID=${PUID}
+      - TZ=${TIMEZONE}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - SONARR_API_KEY=${SONARR_API_KEY}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8989/api/v3/health -H 'X-Api-Key: $$SONARR_API_KEY' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    volumes:
+      - ./radarr:/config
+      - ${MEDIA_DIR}:/data
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    environment:
+      - PGID=${PGID}
+      - PUID=${PUID}
+      - TZ=${TIMEZONE}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - RADARR_API_KEY=${RADARR_API_KEY}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:7878/api/v3/health -H 'X-Api-Key: $$RADARR_API_KEY' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    volumes:
+      - ./prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    environment:
+      - PGID=${PGID}
+      - PUID=${PUID}
+      - TZ=${TIMEZONE}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - PROWLARR_API_KEY=${PROWLARR_API_KEY}
+    depends_on:
+      - flaresolverr
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9696/api/v1/health -H \"X-Api-Key: $$PROWLARR_API_KEY\" || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+  recyclarr:
+    image: recyclarr/recyclarr
+    container_name: recyclarr
+    volumes:
+      - ./recyclarr:/config
+    user: ${PUID}:${PGID}
+    restart: unless-stopped
+    read_only: true
+    tmpfs: /tmp
+    environment:
+      - TZ=${TIMEZONE}
+      - RECYCLARR_CREATE_CONFIG=true
+      - SONARR_API_KEY=${SONARR_API_KEY}
+      - RADARR_API_KEY=${RADARR_API_KEY}
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    ports:
+      - 8191:8191
+    restart: unless-stopped
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=${TIMEZONE}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8191/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+  config:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: config
+    restart: no
+    user: ${PUID}:${PGID}
+    volumes:
+      - ./seerr:/app/seerr
+      - ./sonarr:/app/sonarr
+      - ./radarr:/app/radarr
+      - ./prowlarr:/app/prowlarr
+    environment:
+      - RADARR_API_KEY=${RADARR_API_KEY}
+      - SONARR_API_KEY=${SONARR_API_KEY}
+      - PROWLARR_API_KEY=${PROWLARR_API_KEY}
+      - PROWLARR_URL=http://prowlarr:9696
+      - FLARESOLVERR_URL=http://flaresolverr:8191
+    depends_on:
+      prowlarr:
+        condition: service_healthy
+      flaresolverr:
+        condition: service_healthy
+    command: ["--apply"]
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
+    container_name: seerr
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL}
+      - TZ=${TIMEZONE}
+      - PORT=5056
+    ports:
+      - 5056:5056
+    user: ${PUID}:${PGID}
+    volumes:
+      - ./seerr:/app/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5056/api/v1/status || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
+    restart: unless-stopped
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - ./qbittorrent:/config
+      - ${MEDIA_DIR}:/data
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM}
+    volumes:
+      - ./plex:/config
+      - ${MEDIA_DIR}:/data
+    restart: unless-stopped
+    devices:
+      - /dev/dri:/dev/dri
